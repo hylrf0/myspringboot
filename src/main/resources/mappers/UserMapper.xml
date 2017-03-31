@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hello.UserMapper">
+
+    <resultMap type="hello.User" id="userResultMap">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+    </resultMap>
+
+    <select id="selectUser" resultType="hello.User" resultMap="userResultMap">
+        select id, username from user where id = #{id}
+    </select>
+
+    <select id="selectAllUsers" resultType="hello.User" resultMap="userResultMap">
+        select id, username from user
+    </select>
+
+    <insert id="insertUser" parameterType="hello.User">
+        insert into user (id, username ) values (#{id},#{username})
+    </insert>
+
+    <update id="updateUser" parameterType="hello.User">
+        update user
+        <set>
+            <if test="username != null ">
+                username = #{username},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="hello.User">
+        delete from user where id = #{id}
+    </delete>
+
+</mapper>
